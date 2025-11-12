@@ -1,0 +1,10 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/healthz', fn() => response('ok', 200));
+Route::resource('records', RecordController::class);
+
