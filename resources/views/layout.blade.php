@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SIADO CRUD</title>
+  <title>CRUD</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body class="p-4">
   <div class="container">
-    <h2 class="mb-4">SIADO - CRUD Demo</h2>
+    <h2 class="mb-4">CRUD Demo</h2>
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
