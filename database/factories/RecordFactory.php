@@ -11,9 +11,11 @@ class RecordFactory extends Factory
 
     public function definition(): array
     {
+        $faker = static::faker();
+        
         return [
-            'title' => fake()->sentence(3),
-            'content' => fake()->paragraph(2),
+            'title' => $faker->sentence(3),
+            'content' => $faker->paragraph(2),
         ];
     }
 }
