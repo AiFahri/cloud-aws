@@ -11,12 +11,28 @@ Route::get('/', function () {
 Route::get('/healthz', fn() => response('ok', 200));
 Route::resource('records', RecordController::class);
 
-Route::get('/files', function() {
+Route::get('/files', function () {
     try {
-        $files = Storage::disk('public')->files('uploads');
-        return view('files', compact('files'));
+        // ambil semua file di folder 'uploads' di bucket S3
+        $files = Storage::disk('s3')->files('uploads');
+
+        // optional: bikin URL sementara untuk di-download / preview
+        $fileData = collect($files)->map(function ($path) {
+            return [
+                'path' => $path,
+                'name' => basename($path),
+                'url'  => Storage::disk('s3')->temporaryUrl($path, now()->addMinutes(10)),
+            ];
+        });
+
+        return view('files', [
+            'files' => $fileData,
+        ]);
     } catch (\Exception $e) {
-        return view('files', ['files' => [], 'error' => 'Error loading files: ' . $e->getMessage()]);
+        return view('files', [
+            'files' => [],
+            'error' => 'Error loading files: ' . $e->getMessage(),
+        ]);
     }
 });
 
@@ -51,7 +67,7 @@ Route::post('/files', function(Request $request) {
             return back()->withErrors(['file' => 'Ukuran file terlalu besar. Maksimal 10MB.'])->withInput();
         }
 
-        $path = $file->store('uploads', 'public');
+        $path = $file->store('uploads', 's3');
         
         \Log::info('File uploaded successfully', ['path' => $path]);
         
