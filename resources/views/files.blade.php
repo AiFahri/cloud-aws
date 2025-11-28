@@ -60,17 +60,33 @@
         <span>{{ $error }}</span>
       </div>
     </div>
-  @elseif(count($files) > 0)
-    <div class="space-y-3">
-      @foreach($files as $f)
-        <div class="bg-gradient-to-r from-white to-slate-50 border border-slate-200 rounded-xl p-5 flex items-center gap-4 transition-all duration-300 hover:translate-x-1 hover:shadow-lg hover:border-indigo-500">
-          <i class="bi bi-file-earmark text-3xl text-indigo-600 flex-shrink-0"></i>
-          <span class="flex-1 font-medium text-slate-800 break-all">{{ basename($f) }}</span>
-          <i class="bi bi-check-circle-fill text-green-500 text-xl"></i>
-        </div>
-      @endforeach
+    @if(session('status'))
+  <div class="bg-gradient-to-r from-green-100 to-emerald-100 text-emerald-800 rounded-xl p-4 mb-4 shadow-lg border-l-4 border-green-500">
+    <div class="flex items-center gap-2">
+      <i class="bi bi-check-circle-fill text-green-600"></i>
+      <span>{{ session('status') }}</span>
     </div>
-  @else
+  </div>
+@endif
+
+    @elseif(count($files) > 0)
+  <div class="space-y-3">
+    @foreach($files as $file)
+      <div class="bg-gradient-to-r from-white to-slate-50 border border-slate-200 rounded-xl p-5 flex items-center gap-4 transition-all duration-300 hover:translate-x-1 hover:shadow-lg hover:border-indigo-500">
+        <i class="bi bi-file-earmark text-3xl text-indigo-600 flex-shrink-0"></i>
+        <span class="flex-1 font-medium text-slate-800 break-all">
+          {{ $file['name'] }}
+        </span>
+
+        {{-- tombol download / view pakai temporary URL S3 --}}
+        <a href="{{ $file['url'] }}" target="_blank"
+           class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition">
+          <i class="bi bi-download"></i> Open
+        </a>
+      </div>
+    @endforeach
+  </div>
+@else
     <div class="text-center py-16 text-slate-500">
       <i class="bi bi-folder-x text-7xl text-slate-300 mb-4 block"></i>
       <p class="text-lg">Belum ada file yang diupload.</p>
