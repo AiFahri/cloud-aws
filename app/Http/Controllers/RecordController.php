@@ -9,7 +9,7 @@ class RecordController extends Controller
 {
     public function index()
     {
-        $records = Record::latest()->get();
+        $records = Record::orderBy('id', 'asc')->get();
         return view('records.index', compact('records'));
     }
 
