@@ -45,7 +45,7 @@
       </thead>
       <tbody>
         @foreach($records as $r)
-        <tr class="border-b border-slate-200 transition-all duration-200 hover:bg-gradient-to-r hover:scale-[1.01] hover:shadow-md last:border-b-0">
+        <tr class="border-b border-slate-200 transition-all duration-200 hover:bg-white hover:scale-[1.01] hover:shadow-md last:border-b-0">
           <td class="px-5 py-4 font-semibold text-indigo-600 font-mono">#{{ $r->id }}</td>
           <td class="px-5 py-4 font-semibold text-slate-800">{{ $r->title }}</td>
           <td class="px-5 py-4 text-slate-600 max-w-md truncate">{{ $r->content }}</td>
@@ -81,3 +81,5 @@
   </div>
 @endif
 @endsection
+
+
